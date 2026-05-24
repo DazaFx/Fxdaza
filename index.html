@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mr. Daza - Founder & Trader | TheFundedFX</title>
+  <meta name="description" content="Rodrigo Daza, conocido como FX Daza. Trader profesional, estratega financiero y fundador de TheFundedFX. Especializado en XAUUSD y gestión de capital algorítmico." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --color-primary: #f5f5f0;
+      --color-secondary: #0a0a0a;
+      --color-accent: #1a1a1a;
+      --color-gray: #6b6b6b;
+      --color-gray-light: #d4d4d0;
+      --color-white: #ffffff;
+      --color-card: #ffffff;
+      --font-michroma: 'Michroma', sans-serif;
+      --font-syne: 'Syne', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-syne);
+      background-color: var(--color-primary);
+      color: var(--color-secondary);
+      overflow-x: hidden;
+      antialiased: true;
+    }
+
+    /* ── LOADING ── */
+    #loader {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--color-secondary);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; }
+    #loader .brand {
+      font-family: var(--font-michroma);
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+    }
+    #loader .bar-wrap {
+      margin-top: 1.5rem; height: 1px; width: 6rem;
+      overflow: hidden; border-radius: 9999px;
+      background: rgba(245,245,240,0.2);
+    }
+    #loader .bar {
+      height: 100%; width: 50%; border-radius: 9999px;
+      background: var(--color-primary);
+      animation: loading 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes loading { from { transform: translateX(-60%); } to { transform: translateX(160%); } }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 100vw; z-index: 20;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 4%;
+      background: var(--color-primary);
+      border-bottom: 1px solid rgba(10,10,10,0.08);
+    }
+    .nav-brand {
+      font-family: var(--font-michroma);
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-secondary);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 0;
+      list-style: none;
+    }
+    .nav-links li a {
+      display: block; padding: 0.75rem 1.2rem;
+      font-family: var(--font-syne); font-size: 0.9rem;
+      color: var(--color-secondary); text-decoration: none;
+      letter-spacing: 0.03em; transition: opacity 0.2s;
+      position: relative;
+    }
+    .nav-links li a:hover { opacity: 0.6; }
+    .nav-links li.active a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--color-secondary);
+    }
+    .nav-hamburger {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: 0.5rem;
+    }
+    .nav-hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--color-secondary); margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+    .mobile-menu {
+      display: none; position: fixed; top: 60px; left: 0; right: 0;
+      background: var(--color-primary); z-index: 19;
+      padding: 1rem 4% 2rem;
+      border-bottom: 1px solid rgba(10,10,10,0.1);
+      flex-direction: column; gap: 0.5rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: var(--font-syne); font-size: 1rem;
+      color: var(--color-secondary); text-decoration: none;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(10,10,10,0.07);
+    }
+
+    /* ── SECTIONS BASE ── */
+    section {
+      width: 100vw; position: relative;
+      left: 50%; transform: translateX(-50%);
+      padding: 4%;
+      overflow: hidden;
+    }
+
+    /* ── HERO ── */
+    #inicio {
+      height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; margin-bottom: 0;
+      background: var(--color-secondary);
+      padding-top: 0;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #2a2a2a 100%);
+    }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      opacity: 0.55;
+    }
+    .hero-grid {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image:
+        linear-gradient(rgba(245,245,240,0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(245,245,240,0.5) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 4%;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-michroma);
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(245,245,240,0.5); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+    }
+    .hero-title {
+      font-family: var(--font-michroma);
+      font-size: clamp(2.5rem, 8vw, 7rem);
+      font-weight: 700; line-height: 0.95;
+      color: var(--color-primary);
+      text-transform: uppercase; letter-spacing: -0.02em;
+      opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+    }
+    .hero-title span {
+      display: block; color: rgba(245,245,240,0.25);
+      font-size: clamp(1rem, 3vw, 2.5rem);
+      letter-spacing: 0.15em; margin-top: 0.5rem;
+      font-size: clamp(0.8rem, 2vw, 1.4rem);
+    }
+    .hero-subtitle {
+      margin-top: 2rem; max-width: 520px;
+      font-family: var(--font-syne); font-size: clamp(0.85rem, 1.5vw, 1rem);
+      line-height: 1.7; color: rgba(245,245,240,0.6);
+      letter-spacing: 0.05em;
+      opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .hero-cta {
+      display: inline-block; margin-top: 2.5rem;
+      font-family: var(--font-michroma); font-size: 0.75rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--color-secondary); background: var(--color-primary);
+      padding: 1rem 2.5rem; text-decoration: none;
+      transition: opacity 0.2s;
+      opacity: 0; animation: fadeUp 0.8s 0.9s forwards;
+    }
+    .hero-cta:hover { opacity: 0.8; }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0; animation: fadeIn 1s 1.5s forwards;
+    }
+    .hero-scroll span {
+      font-family: var(--font-michroma); font-size: 0.6rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: rgba(245,245,240,0.3);
+    }
+    .hero-scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, rgba(245,245,240,0.4), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { transform: scaleY(0); transform-origin: top; }
+      50% { transform: scaleY(1); transform-origin: top; }
+      51% { transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; }
+    }
+
+    /* ── SOBRE MÍ ── */
+    #sobre-mi {
+      background: var(--color-white);
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: center;
+      gap: 4%; min-height: 90vh; margin-bottom: 4rem;
+      padding: 6% 4%;
+    }
+    .about-text { flex: 1 1 400px; max-width: 520px; }
+    .section-label {
+      font-family: var(--font-michroma);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700; letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+    }
+    .about-name {
+      font-family: var(--font-michroma);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 700; margin-bottom: 1.5rem;
+    }
+    .body-text {
+      font-family: var(--font-syne); font-size: clamp(0.8rem, 1.3vw, 0.95rem);
+      line-height: 1.85; letter-spacing: 0.04em; color: #333;
+      margin-bottom: 1rem;
+    }
+    .about-img { flex: 1 1 320px; max-width: 480px; }
+    .about-img-inner {
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: 2rem; overflow: hidden;
+      background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-img-placeholder {
+      font-family: var(--font-michroma);
+      font-size: 4rem; color: rgba(245,245,240,0.2);
+      letter-spacing: 0.2em;
+    }
+    .about-firma {
+      text-align: right; margin-top: 1.5rem;
+    }
+    .about-firma-text {
+      font-family: var(--font-michroma);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      letter-spacing: 0.08em; opacity: 0.25;
+      font-style: italic;
+    }
+
+    /* ── FONDO ── */
+    #fondo {
+      background: var(--color-secondary);
+      padding: 8% 4%; margin-bottom: 4rem;
+    }
+    .fondo-header .section-label { color: var(--color-primary); }
+    .video-wrap {
+      width: 100%; max-width: 900px; margin: 2rem auto;
+      aspect-ratio: 16/9; border-radius: 1rem; overflow: hidden;
+      background: #111;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+      background: linear-gradient(135deg, #111 0%, #1e1e1e 100%);
+    }
+    .video-play {
+      width: 64px; height: 64px; border-radius: 50%;
+      border: 1.5px solid rgba(245,245,240,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .video-play svg { fill: rgba(245,245,240,0.6); margin-left: 4px; }
+    .video-placeholder p {
+      font-family: var(--font-michroma); font-size: 0.7rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(245,245,240,0.3);
+    }
+    .fondo-body { max-width: 700px; margin: 2rem auto 0; text-align: center; }
+    .fondo-body .body-text { color: rgba(245,245,240,0.6); }
+    .btn {
+      display: inline-block; margin-top: 1.5rem;
+      font-family: var(--font-syne); font-size: clamp(0.85rem, 1.3vw, 1rem);
+      font-weight: 600; letter-spacing: 0.05em;
+      color: var(--color-secondary); background: var(--color-primary);
+      padding: 0.9rem 2.5rem; border: none; cursor: pointer;
+      border-radius: 0.5rem; text-decoration: none;
+      transition: opacity 0.2s; box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-dark {
+      color: var(--color-primary); background: #3a3a3a;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+
+    /* ── VISIÓN ── */
+    #vision {
+      background: var(--color-primary);
+      padding: 8% 4%; margin-bottom: 4rem;
+    }
+    .vision-inner { max-width: 900px; margin: 0 auto; }
+    .vision-img {
+      width: 100%; aspect-ratio: 16/9;
+      border-radius: 2rem; overflow: hidden; margin: 2rem 0;
+      background: #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .vision-img-content {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #111 0%, #222 50%, #0a0a0a 100%);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem;
+    }
+    .vision-icon {
+      font-family: var(--font-michroma);
+      font-size: clamp(2rem, 6vw, 5rem);
+      color: rgba(245,245,240,0.08); letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+    .vision-tagline {
+      font-family: var(--font-michroma);
+      font-size: clamp(0.6rem, 1.5vw, 1rem);
+      letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(245,245,240,0.25);
+    }
+    .vision-desc {
+      text-align: center; margin-top: 1.5rem;
+    }
+
+    /* ── EMPRESAS ── */
+    #empresas {
+      background: var(--color-white);
+      padding: 8% 4%; margin-bottom: 4rem;
+    }
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .company-card {
+      border-radius: 1.5rem; overflow: hidden;
+      border: 1px solid rgba(10,10,10,0.07);
+      background: var(--color-primary);
+      display: flex; flex-direction: column;
+    }
+    .company-card-img {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--color-secondary);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .company-card-img-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.5s ease;
+    }
+    .company-card:hover .company-card-img-inner { transform: scale(1.08); }
+    .company-card-img-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #111 0%, #1e1e1e 100%);
+    }
+    .company-card-logo {
+      position: relative; z-index: 1;
+      font-family: var(--font-michroma);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: rgba(245,245,240,0.15);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      text-align: center; padding: 1rem;
+    }
+    .company-card-body { padding: 1.2rem 1.5rem 1.5rem; }
+    .company-card-name {
+      font-family: var(--font-syne); font-weight: 700;
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      margin-bottom: 0.4rem; text-align: center;
+    }
+    .company-card-desc {
+      font-family: var(--font-syne); font-size: clamp(0.75rem, 1.2vw, 0.875rem);
+      color: rgba(10,10,10,0.6); text-align: center; line-height: 1.6;
+    }
+
+    /* ── BROKER ── */
+    #broker {
+      background: var(--color-secondary);
+      padding: 8% 4%; margin-bottom: 4rem;
+    }
+    .broker-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-wrap: wrap;
+      align-items: center; justify-content: space-between; gap: 2rem;
+    }
+    .broker-text { flex: 1 1 340px; }
+    .broker-title {
+      font-family: var(--font-michroma);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700; color: var(--color-primary);
+      text-align: center; margin-bottom: 2rem;
+    }
+    .broker-text .body-text { color: rgba(245,245,240,0.65); font-size: 0.9rem; }
+    .broker-logo {
+      flex: 0 0 auto;
+      font-family: var(--font-michroma);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      color: rgba(245,245,240,0.12);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      border: 1px solid rgba(245,245,240,0.08);
+      padding: 1.5rem 2.5rem; border-radius: 1rem;
+    }
+    .broker-cta { text-align: center; margin-top: 2.5rem; }
+
+    /* ── FILOSOFÍA ── */
+    #filosofia {
+      background: var(--color-primary);
+      padding: 8% 4%; margin-bottom: 4rem;
+    }
+    .philosophy-header { text-align: center; margin-bottom: 3rem; }
+    .philosophy-header .body-text { max-width: 600px; margin: 1rem auto 0; }
+    .philosophy-tabs {
+      display: flex; flex-direction: column;
+      gap: 1rem; max-width: 900px; margin: 0 auto;
+    }
+    .philo-row {
+      display: flex; align-items: stretch; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .philo-tabs-col { flex: 0 0 280px; display: flex; flex-direction: column; gap: 0.75rem; }
+    .philo-tab {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1.2rem 1.5rem; border-radius: 0.75rem;
+      text-align: left; transition: all 0.2s;
+    }
+    .philo-tab.active { background: var(--color-white); box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .philo-tab:not(.active) { opacity: 0.5; }
+    .philo-tab:not(.active):hover { opacity: 0.8; }
+    .philo-num {
+      font-family: var(--font-michroma);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 700; min-width: 48px;
+    }
+    .philo-label {
+      font-family: var(--font-michroma);
+      font-size: clamp(0.8rem, 1.5vw, 1rem);
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .philo-content {
+      flex: 1 1 300px;
+      border-radius: 1.5rem; overflow: hidden;
+      min-height: 300px; background: var(--color-secondary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .philo-content-inner {
+      padding: 2.5rem; text-align: center;
+    }
+    .philo-content-num {
+      font-family: var(--font-michroma);
+      font-size: 5rem; color: rgba(245,245,240,0.06);
+      line-height: 1; margin-bottom: 0.5rem;
+    }
+    .philo-content-title {
+      font-family: var(--font-michroma);
+      font-size: 1.4rem; color: var(--color-primary);
+      margin-bottom: 1rem; letter-spacing: 0.05em;
+    }
+    .philo-content-desc {
+      font-family: var(--font-syne); font-size: 0.875rem;
+      color: rgba(245,245,240,0.55); line-height: 1.8; letter-spacing: 0.04em;
+    }
+    .philosophy-footer {
+      max-width: 700px; margin: 3rem auto 0;
+      text-align: center;
+    }
+    .philosophy-footer .body-text { color: #555; }
+
+    /* ── CONTACTO ── */
+    #contacto {
+      background: var(--color-secondary);
+      padding: 8% 4% 0; margin-bottom: 0;
+    }
+    .contact-inner { max-width: 800px; }
+    .contact-inner .body-text { color: rgba(245,245,240,0.55); max-width: 500px; }
+    .contact-title {
+      font-family: var(--font-michroma);
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700; color: var(--color-primary);
+      text-transform: uppercase; margin: 3rem 0 1rem;
+      letter-spacing: -0.01em;
+    }
+    .contact-email {
+      font-family: var(--font-syne); font-size: clamp(0.8rem, 1.5vw, 1rem);
+      color: rgba(245,245,240,0.5); letter-spacing: 0.05em; margin-bottom: 2rem;
+    }
+    .contact-email a { color: inherit; text-decoration: none; }
+    .contact-email a:hover { color: var(--color-primary); }
+    .social-links { display: flex; gap: 1rem; align-items: center; }
+    .social-link {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid rgba(245,245,240,0.15);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .social-link:hover {
+      border-color: rgba(245,245,240,0.4);
+      background: rgba(245,245,240,0.05);
+    }
+    .social-link svg { fill: rgba(245,245,240,0.6); }
+    .contact-firma {
+      display: flex; justify-content: flex-end; margin: 4rem 0;
+    }
+    .contact-firma-text {
+      font-family: var(--font-michroma);
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      color: rgba(245,245,240,0.06);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .contact-footer {
+      border-top: 1px solid rgba(245,245,240,0.07);
+      padding: 2rem 0;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy, .footer-privacy {
+      font-family: var(--font-michroma);
+      font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+      color: rgba(245,245,240,0.35); letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(60px) scale(0.97);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0) scale(1); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: block; }
+      #sobre-mi { flex-direction: column; }
+      .philo-row { flex-direction: column; }
+      .philo-tabs-col { flex: 0 0 auto; }
+      .broker-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <span class="brand">fxdaza</span>
+    <div class="bar-wrap"><div class="bar"></div></div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#inicio">fxdaza</a>
+    <ul class="nav-links" id="navLinks">
+      <li class="active"><a href="#inicio">Inicio</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#vision">Visión</a></li>
+      <li><a href="#empresas">Empresas</a></li>
+      <li><a href="#broker">TheFundedFX</a></li>
+      <li><a href="#filosofia">Filosofía</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#inicio" onclick="closeMobile()">Inicio</a>
+    <a href="#sobre-mi" onclick="closeMobile()">Sobre mí</a>
+    <a href="#vision" onclick="closeMobile()">Visión</a>
+    <a href="#empresas" onclick="closeMobile()">Empresas</a>
+    <a href="#broker" onclick="closeMobile()">TheFundedFX</a>
+    <a href="#filosofia" onclick="closeMobile()">Filosofía</a>
+    <a href="#contacto" onclick="closeMobile()">Contacto</a>
+  </div>
+
+  <!-- ── HERO ── -->
+  <section id="inicio">
+    <div class="hero-bg">
+      <img src="https://i.ibb.co/DPS3h58j/fondo-pagina.png" alt="FX Daza hero" />
+    </div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Trader · Estratega · Fundador</p>
+      <h1 class="hero-title">
+        Mr. Daza
+        <span>Founder of TheFundedFX</span>
+      </h1>
+      <p class="hero-subtitle">
+        Trader profesional especializado en XAUUSD. Fundador de un ecosistema enfocado en la creación de capital a través de los mercados financieros.
+      </p>
+      <a class="hero-cta" href="#sobre-mi">Conocer más</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── SOBRE MÍ ── -->
+  <section id="sobre-mi">
+    <div class="about-text reveal-left">
+      <h2 class="section-label">Sobre mí</h2>
+      <h3 class="about-name">Mi nombre es Rodrigo</h3>
+      <p class="body-text">
+        Rodrigo Daza, conocido como <strong>FX Daza</strong>, es trader profesional, estratega financiero y fundador de un ecosistema enfocado en la creación de capital a través de los mercados. Desde 2019, ha estado inmerso en el mercado financiero, desarrollando una mentalidad basada en disciplina, enfoque y ejecución.
+      </p>
+      <p class="body-text">
+        Especializado en la operativa del oro (XAUUSD), se ha posicionado por su precisión en entradas y su capacidad para interpretar el mercado a través de un enfoque principalmente fundamental, adaptado a la volatilidad actual.
+      </p>
+      <p class="body-text">
+        Es fundador de The Funded FX, una comunidad activa de traders en Latinoamérica donde se comparten señales, análisis en tiempo real y formación orientada a resultados. Su enfoque va más allá del trading: busca formar traders con criterio, gestión emocional y visión a largo plazo.
+      </p>
+      <p class="body-text">
+        Además, lidera un fondo de inversión respaldado por un bot algorítmico propio, diseñado para identificar oportunidades en los mercados con eficiencia y consistencia, combinando tecnología y estrategia para una gestión de capital optimizada.
+      </p>
+      <div class="about-firma">
+        <span class="about-firma-text">— FX Daza</span>
+      </div>
+    </div>
+    <div class="about-img reveal">
+      <div class="about-img-inner">
+        <img src="https://i.ibb.co/CKHHq2j8/perfil-2.png" alt="Rodrigo Daza - FX Daza" style="width:100%;height:100%;object-fit:cover;border-radius:2rem;" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FONDO ── -->
+  <section id="fondo">
+    <div class="fondo-header reveal">
+      <h2 class="section-label" style="color:var(--color-primary)">The Funded Capital Group</h2>
+    </div>
+    <div class="video-wrap reveal">
+      <div class="video-placeholder">
+        <div class="video-play">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <p>Video presentación del fondo</p>
+      </div>
+    </div>
+    <div class="fondo-body reveal">
+      <p class="body-text">
+        Si eres un inversor interesado en conocer más sobre el fondo privado y las oportunidades disponibles, puedes ponerte en contacto con nosotros a través del formulario de contacto.
+      </p>
+      <p class="body-text">
+        Nuestro equipo revisará cada solicitud y, en caso de encajar con el perfil de inversor adecuado, nos pondremos en contacto contigo para compartir más detalles.
+      </p>
+      <a href="mailto:rodrigo.irlanda1998@gmail.com" class="btn btn-dark" style="display:inline-block;margin-top:1.5rem;">
+        Contactar al equipo
+      </a>
+    </div>
+  </section>
+
+  <!-- ── VISIÓN ── -->
+  <section id="vision">
+    <div class="vision-inner">
+      <div class="reveal">
+        <h2 class="section-label">Visión</h2>
+        <p class="body-text">Desde el desarrollo de tecnología hasta la gestión de capital privado, mi enfoque siempre ha sido el mismo:</p>
+      </div>
+      <div class="vision-img reveal">
+        <img src="https://i.ibb.co/FL5wDhsp/fondo-3.png" alt="Visión FX Daza" style="width:100%;height:100%;object-fit:cover;" />
+      </div>
+      <div class="vision-desc reveal">
+        <p class="body-text" style="text-align:center;max-width:640px;margin:0 auto;">
+          FX Daza representa una nueva generación de traders: enfocados, estratégicos y alejados de lo convencional. Su filosofía se basa en disciplina, consistencia y ejecución bajo presión, entendiendo que el verdadero crecimiento se construye en el proceso, no solo en el resultado.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EMPRESAS ── -->
+  <section id="empresas">
+    <div class="reveal">
+      <h2 class="section-label">Mis Empresas</h2>
+      <p class="body-text">A lo largo de los años he desarrollado y participado en la creación de diferentes proyectos dentro del sector financiero y tecnológico.</p>
+    </div>
+    <div class="companies-grid" style="display:flex;justify-content:center;">
+      <div class="company-card reveal" style="max-width:560px;width:100%;">
+        <div class="company-card-img">
+          <div class="company-card-img-inner">
+            <img src="https://i.ibb.co/V0g6cT6f/680346924-1684601586233589-7668017073869196617-n.png" alt="TheFundedFX" style="width:100%;height:100%;object-fit:cover;" />
+          </div>
+        </div>
+        <div class="company-card-body">
+          <div class="company-card-name">TheFundedFX</div>
+          <div class="company-card-desc">Comunidad activa dedicada al trading. Señales, análisis en tiempo real y formación orientada a resultados en Latinoamérica.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BROKER / THEFUNDEDFX ── -->
+  <section id="broker">
+    <h2 class="broker-title reveal">TheFundedFX</h2>
+    <div class="broker-inner">
+      <div class="broker-text reveal">
+        <p class="body-text">
+          TheFundedFX es una comunidad de traders diseñada para ofrecer acceso profesional a los mercados financieros globales. Nuestra infraestructura combina análisis técnico y fundamental, señales en tiempo real y formación orientada a resultados. Conectamos traders e inversores con un ecosistema financiero sólido, transparente y preparado para operar al más alto nivel.
+        </p>
+      </div>
+      <div class="broker-logo reveal">
+        FUNDED<br/>FX
+      </div>
+    </div>
+    <div class="broker-cta reveal">
+      <a href="https://www.instagram.com/fx.daza12/" target="_blank" class="btn">
+        Únete a TheFundedFX
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FILOSOFÍA ── -->
+  <section id="filosofia">
+    <div class="philosophy-header reveal">
+      <h2 class="section-label">Filosofía</h2>
+      <p class="body-text">
+        Creo firmemente que el éxito dentro de los mercados no depende únicamente del conocimiento técnico. Depende de tres pilares fundamentales:
+      </p>
+    </div>
+    <div class="philosophy-tabs reveal">
+      <div class="philo-row">
+        <div class="philo-tabs-col">
+          <button class="philo-tab active" onclick="selectTab(0)">
+            <span class="philo-num">01</span>
+            <span class="philo-label">Disciplina</span>
+          </button>
+          <button class="philo-tab" onclick="selectTab(1)">
+            <span class="philo-num">02</span>
+            <span class="philo-label">Mentalidad</span>
+          </button>
+          <button class="philo-tab" onclick="selectTab(2)">
+            <span class="philo-num">03</span>
+            <span class="philo-label">Gestión del riesgo</span>
+          </button>
+        </div>
+        <div class="philo-content" id="philoContent">
+          <div style="position:relative;width:100%;height:100%;min-height:300px;border-radius:1.5rem;overflow:hidden;">
+            <img id="philoImg" src="https://i.ibb.co/DPS3h58j/fondo-pagina.png" alt="Disciplina" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.4s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);"></div>
+            <div class="philo-content-inner" style="position:absolute;bottom:0;left:0;right:0;padding:2rem;">
+              <div class="philo-content-num" id="philoNum" style="color:rgba(255,255,255,0.08);">01</div>
+              <div class="philo-content-title" id="philoTitle">Disciplina</div>
+              <div class="philo-content-desc" id="philoDesc">La disciplina permite ejecutar un sistema incluso cuando las emociones interfieren. Es la base de toda operativa sostenible en el tiempo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="philosophy-footer reveal">
+      <p class="body-text">
+        Por eso mi enfoque siempre ha sido construir estructuras profesionales que permitan operar y gestionar capital con un nivel de seriedad que está muy lejos de lo que normalmente se ve en esta industria.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section id="contacto">
+    <div class="contact-inner">
+      <p class="body-text reveal">Este sitio web representa una parte de mi trayectoria como trader y empresario dentro del sector financiero.</p>
+      <p class="body-text reveal">Pero más allá de los proyectos actuales, el verdadero objetivo es seguir construyendo comunidad, infraestructura y oportunidades que aporten valor real dentro de la industria.</p>
+      <p class="body-text reveal">Los mercados financieros no son un juego.</p>
+      <p class="body-text reveal">Son un entorno donde solo sobreviven quienes trabajan con visión, disciplina y estructura.</p>
+
+      <div class="contact-firma">
+        <span class="contact-firma-text">FX DAZA</span>
+      </div>
+
+      <h2 class="contact-title reveal">Contacto</h2>
+      <div class="contact-email reveal">
+        <a href="mailto:rodrigo.irlanda1998@gmail.com">rodrigo.irlanda1998@gmail.com</a>
+      </div>
+      <div class="social-links reveal" style="flex-wrap:wrap;gap:0.75rem;">
+        <!-- Instagram -->
+        <a class="social-link" href="https://www.instagram.com/fx.daza12/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de FX Daza">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(245,245,240,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="rgba(245,245,240,0.6)" stroke="none"/>
+          </svg>
+        </a>
+        <!-- Email -->
+        <a class="social-link" href="mailto:rodrigo.irlanda1998@gmail.com" aria-label="Email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(245,245,240,0.6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+        <!-- Telegram -->
+        <a class="social-link" href="https://t.me/+3nbkA6QfD_U3OGIx" target="_blank" rel="noopener noreferrer" aria-label="Telegram FX Daza">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(245,245,240,0.6)">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.17 13.67l-2.93-.916c-.638-.197-.651-.638.136-.944l11.437-4.41c.529-.19.994.131.81.94z"/>
+          </svg>
+        </a>
+        <!-- YouTube -->
+        <a class="social-link" href="https://www.youtube.com/@FxDaza" target="_blank" rel="noopener noreferrer" aria-label="YouTube FX Daza">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(245,245,240,0.6)">
+            <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+          </svg>
+        </a>
+        <!-- WhatsApp -->
+        <a class="social-link" href="https://chat.whatsapp.com/DTmCIx5dPEz8vyY2wS0rdt?mode=gi_t" target="_blank" rel="noopener noreferrer" aria-label="Grupo de WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(245,245,240,0.6)">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-footer">
+      <span class="footer-copy">©2026 — FXDAZA</span>
+      <a class="footer-privacy" href="#">Política de privacidad</a>
+    </div>
+  </section>
+
+  <script>
+    // ── LOADER ──
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 900);
+    });
+
+    // ── HAMBURGER ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMobile() { mobileMenu.classList.remove('open'); }
+
+    // ── ACTIVE NAV ──
+    const sections = document.querySelectorAll('section[id]');
+    const navItems = document.querySelectorAll('.nav-links li');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navItems.forEach(li => li.classList.remove('active'));
+          const active = document.querySelector(`.nav-links li a[href="#${e.target.id}"]`);
+          if (active) active.parentElement.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => observer.observe(s));
+
+    // ── REVEAL ON SCROLL ──
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-left').forEach(el => revealObserver.observe(el));
+
+    // ── PHILOSOPHY TABS ──
+    const tabData = [
+      { num: '01', title: 'Disciplina', desc: 'La disciplina permite ejecutar un sistema incluso cuando las emociones interfieren. Es la base de toda operativa sostenible en el tiempo.', img: 'https://i.ibb.co/DPS3h58j/fondo-pagina.png' },
+      { num: '02', title: 'Mentalidad', desc: 'La mentalidad correcta permite pensar en probabilidades y no en resultados aislados. Cada trade es parte de un proceso, no un evento único.', img: 'https://i.ibb.co/2TrqzH0/fondo-4.png' },
+      { num: '03', title: 'Gestión del riesgo', desc: 'La gestión del riesgo protege el capital y permite la sostenibilidad a largo plazo. Sin ella, ninguna estrategia puede sobrevivir.', img: 'https://i.ibb.co/FL5wDhsp/fondo-3.png' }
+    ];
+    function selectTab(i) {
+      document.querySelectorAll('.philo-tab').forEach((t, idx) => {
+        t.classList.toggle('active', idx === i);
+      });
+      const img = document.getElementById('philoImg');
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = tabData[i].img;
+        img.alt = tabData[i].title;
+        img.style.opacity = '1';
+      }, 200);
+      document.getElementById('philoNum').textContent = tabData[i].num;
+      document.getElementById('philoTitle').textContent = tabData[i].title;
+      document.getElementById('philoDesc').textContent = tabData[i].desc;
+    }
+  </script>
+</body>
+</html>
